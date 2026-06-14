@@ -1,0 +1,136 @@
+body {
+  background-color: #0b1f3a;
+  margin: 0;
+  padding: 0;
+}
+
+.medical-container {
+  direction: rtl;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #333;
+}
+
+.medical-card {
+  background: #102a4a;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #cfe3ff;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #2b4f7a;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #0f2f55;
+  color: #ffffff;
+}
+
+.btn-submit {
+  background-color: #1fa457;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover {
+  background-color: #59b580;
+}
+
+.medical-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  text-align: right;
+  color: #eaf2ff;
+}
+
+.medical-table th {
+  background-color: #1f3b63;
+  color: white;
+  padding: 12px;
+  border: 1px solid #1d3f66;
+}
+
+.medical-table td {
+  padding: 12px;
+  background-color: #0f2f55;
+  border: 1px solid #1d3f66;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.badge-general { background-color: #3498db; }
+
+/* تنظيم الأدوية */
+.medications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  padding: 15px;
+  border: 1px dashed #bdc3c7;
+  border-radius: 8px;
+  margin-top: 15px;
+  background-color: #0f2f55;
+}
+
+.med-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px;
+  background-color: #102a4a;
+  border: 1px solid #1d3f66;
+  border-radius: 6px;
+  color: #eaf2ff;
+}
+
+/* 🟢 الجزء الخاص بالصور - أصبح الآن ريسبونسيف */
+.ashura-side {
+  width: 15%; /* حجم الصورة يتناسب مع عرض الشاشة */
+  max-width: 150px;
+  height: auto;
+  opacity: 0.8;
+  pointer-events: none;
+  background-color: transparent;
+}
+
+/* للموبايل: نصغر الصور ونرتب العناصر */
+@media (max-width: 600px) {
+  .ashura-side {
+    width: 60px; /* تصغير الصور جداً في الموبايل */
+  }
+  .patient-info-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
