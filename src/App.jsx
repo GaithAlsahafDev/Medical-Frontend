@@ -143,7 +143,7 @@ function App() {
    // ... (داخل الـ component في App.jsx)
 
 // ضع هذه الأسطر هنا تحت بعضها:
-const API_URL = import.meta.env.VITE_API_URL + '/patients';
+const API_URL = 'https://medical-api-4te3.onrender.com/api/patients';
 const AUTH_URL = import.meta.env.VITE_API_URL.replace('/patients', '/auth');
 
 // ... (باقي الكود)

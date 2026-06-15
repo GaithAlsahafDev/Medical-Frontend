@@ -15,7 +15,7 @@ function Login() {
     try {
       // إرسال طلب تسجيل الدخول
      // استخدم الرابط الأساسي من المتغير، ثم أضف المسار الصحيح يدوياً:
-const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+const response = await axios.post(`https://medical-api-4te3.onrender.com/api/auth/login`, {
   username: username,
   password: password
 });
