@@ -6,23 +6,22 @@ function Login() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(''); 
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // 1. أضفنا هذه الحالة
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // 2. بدأ التحميل
     setMessage('');
     setError('');
 
     try {
-      // إرسال طلب تسجيل الدخول
-     // استخدم الرابط الأساسي من المتغير، ثم أضف المسار الصحيح يدوياً:
-const response = await axios.post(`https://medical-api-4te3.onrender.com/api/auth/login`, {
-  username: username,
-  password: password
-});
+      const response = await axios.post(`https://medical-api-4te3.onrender.com/api/auth/login`, {
+        username: username,
+        password: password
+      });
 
-      // 1. حفظ التوكن والصلاحية (Role) في localStorage
       localStorage.setItem('token', response.data.token); 
-      localStorage.setItem('role', response.data.role); // هنا حفظنا الصلاحية
+      localStorage.setItem('role', response.data.role);
       localStorage.setItem('isLoggedIn', 'true');
 
       setMessage('تم تسجيل الدخول بنجاح، جاري التحويل...');
@@ -32,8 +31,9 @@ const response = await axios.post(`https://medical-api-4te3.onrender.com/api/aut
       }, 1500);
 
     } catch (err) {
-      // عرض رسالة الخطأ
       setError("خطأ: اسم المستخدم أو كلمة المرور غير صحيحة");
+    } finally {
+      setIsLoading(false); // 3. انتهى التحميل (سواء نجح أو فشل)
     }
   };
 
@@ -83,17 +83,24 @@ const response = await axios.post(`https://medical-api-4te3.onrender.com/api/aut
             }} 
         />
         
-        <button type="submit" style={{
-          width: '100%',
-          padding: '15px',
-          backgroundColor: '#27ae60',
-          color: 'white',
-          border: 'none',
-          borderRadius: '10px',
-          fontSize: '20px',
-          fontWeight: 'bold',
-          cursor: 'pointer'
-        }}>دخول</button>
+        {/* 4. الزر يتغير شكله بناءً على isLoading */}
+        <button 
+          type="submit" 
+          disabled={isLoading}
+          style={{
+            width: '100%',
+            padding: '15px',
+            backgroundColor: isLoading ? '#7f8c8d' : '#27ae60', // رمادي عند التحميل
+            color: 'white',
+            border: 'none',
+            borderRadius: '10px',
+            fontSize: '20px',
+            fontWeight: 'bold',
+            cursor: isLoading ? 'not-allowed' : 'pointer'
+          }}
+        >
+          {isLoading ? 'جاري الدخول...' : 'دخول'}
+        </button>
 
         {message && (
           <div style={{ color: '#27ae60', marginTop: '15px', fontWeight: 'bold' }}>
