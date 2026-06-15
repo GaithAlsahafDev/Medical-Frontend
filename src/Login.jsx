@@ -14,10 +14,10 @@ function Login() {
 
     try {
       // إرسال طلب تسجيل الدخول
-      const response = await axios.post('http://localhost:5186/api/auth/login', {
-        username: username,
-        password: password
-      });
+     const response = await axios.post(`${import.meta.env.VITE_API_URL.replace('/patients', '/auth')}/login`, {
+  username: username,
+  password: password
+});
 
       // 1. حفظ التوكن والصلاحية (Role) في localStorage
       localStorage.setItem('token', response.data.token); 

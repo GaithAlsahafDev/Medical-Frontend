@@ -140,7 +140,13 @@ function App() {
   const [openDropdown, setOpenDropdown] = useState(null);
 
   //const API_URL = 'http://localhost:5186/api/patients';
-  const API_URL = import.meta.env.VITE_API_URL + '/patients';
+   // ... (داخل الـ component في App.jsx)
+
+// ضع هذه الأسطر هنا تحت بعضها:
+const API_URL = import.meta.env.VITE_API_URL + '/patients';
+const AUTH_URL = import.meta.env.VITE_API_URL.replace('/patients', '/auth');
+
+// ... (باقي الكود)
 
   // استدعاء دالة جلب المرضى عند تحميل الصفحة مباشرة لتحديث العداد والجدول
   useEffect(() => {
@@ -232,7 +238,7 @@ function App() {
   };
   const fetchDoctors = async () => {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:5186/api/auth/users', {
+    const response = await fetch(`${AUTH_URL}/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     if (response.ok) {
@@ -291,7 +297,7 @@ function App() {
   const handleRegisterDoctor = async () => {
     try {
       const token = localStorage.getItem('token'); 
-      const response = await fetch('http://localhost:5186/api/auth/register', {
+      const response = await fetch(`${AUTH_URL}/register`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -326,7 +332,7 @@ function App() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5186/api/auth/delete-doctor/${username}`, {
+      const response = await fetch(`${AUTH_URL}/delete-doctor/${username}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
