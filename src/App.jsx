@@ -238,15 +238,17 @@ const AUTH_URL = import.meta.env.VITE_API_URL.replace('/patients', '/auth');
   };
   const fetchDoctors = async () => {
     const token = localStorage.getItem('token');
-    const response = await fetch(`${AUTH_URL}/users`, {
+    // المسار الصحيح بناءً على الـ Route في الـ AuthController
+    const response = await fetch(`https://medical-api-4te3.onrender.com/api/auth/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
+
     if (response.ok) {
         const data = await response.json();
-        //  الإضافة هنا: استثناء المستخدم الذي دوره "Admin"
+        // استثناء الـ Admin من القائمة
         setDoctors(data.filter(u => u.role !== 'Admin')); 
     }
-  };
+};
 
 
   // بناء خارطة السجلات الفرعية وتجنب الأخطاء عند انعدام حقول المريض الحالية
@@ -329,29 +331,21 @@ const response = await fetch(`https://medical-api-4te3.onrender.com/api/auth/reg
   };
   
   const handleDeleteDoctor = async (username) => {
-    if (!window.confirm(`هل أنت متأكد من حذف الطبيب: ${username}؟`)) return;
-
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${AUTH_URL}/delete-doctor/${username}`, {
+    const token = localStorage.getItem('token');
+    
+    // المسار الصحيح للـ Delete في الـ AuthController
+    const response = await fetch(`https://medical-api-4te3.onrender.com/api/auth/delete-doctor/${username}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
-      });
+    });
 
-      if (response.ok) {
+    if (response.ok) {
         alert("تم حذف الطبيب بنجاح!");
-        
-        //  الحل هنا: قم بتحديث القائمة فوراً في الـ State
-        // هذا السطر يزيل الطبيب من القائمة المعروضة أمامك فوراً
-        setDoctors(doctors.filter(d => d.username !== username));
-        
-      } else {
-        alert("فشل في حذف الطبيب.");
-      }
-    } catch (error) {
-      console.error("خطأ:", error);
+        fetchDoctors(); // تحديث القائمة بعد الحذف
+    } else {
+        alert("فشل حذف الطبيب.");
     }
-  };
+};
   const toggleDropdown = (category) => {
     if (openDropdown === category) {
       setOpenDropdown(null);
