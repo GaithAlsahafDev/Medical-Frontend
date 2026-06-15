@@ -297,17 +297,18 @@ const AUTH_URL = import.meta.env.VITE_API_URL.replace('/patients', '/auth');
   const handleRegisterDoctor = async () => {
     try {
       const token = localStorage.getItem('token'); 
-      const response = await fetch(`${AUTH_URL}/register`, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          username: newDocUsername,
-          password: newDocPassword
-        })
-      });
+      // استبدل السطر الذي يحتوي على AUTH_URL بهذا السطر المباشر:
+const response = await fetch(`https://medical-api-4te3.onrender.com/api/auth/register`, {
+  method: 'POST',
+  headers: { 
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  body: JSON.stringify({
+    username: newDocUsername,
+    password: newDocPassword
+  })
+});
 
       if (response.status === 401 || response.status === 403) {
         alert("عذراً، انتهت الجلسة أو لا تملك صلاحية أدمن لإضافة مستخدمين!");
