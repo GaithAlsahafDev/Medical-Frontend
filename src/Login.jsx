@@ -14,7 +14,8 @@ function Login() {
 
     try {
       // إرسال طلب تسجيل الدخول
-     const response = await axios.post(`${import.meta.env.VITE_API_URL.replace('/patients', '/auth')}/login`, {
+     // استخدم الرابط الأساسي من المتغير، ثم أضف المسار الصحيح يدوياً:
+const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
   username: username,
   password: password
 });
