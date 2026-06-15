@@ -139,7 +139,8 @@ function App() {
   // الـ State المسؤول عن فتح وإغلاق القوائم المنسدلة لكل قسم بشكل مستقل
   const [openDropdown, setOpenDropdown] = useState(null);
 
-  const API_URL = 'http://localhost:5186/api/patients';
+  //const API_URL = 'http://localhost:5186/api/patients';
+  const API_URL = import.meta.env.VITE_API_URL + '/patients';
 
   // استدعاء دالة جلب المرضى عند تحميل الصفحة مباشرة لتحديث العداد والجدول
   useEffect(() => {
