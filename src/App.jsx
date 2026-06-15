@@ -331,9 +331,14 @@ const response = await fetch(`https://medical-api-4te3.onrender.com/api/auth/reg
   };
   
   const handleDeleteDoctor = async (username) => {
+    // 1. إضافة رسالة التأكيد هنا
+    const isConfirmed = window.confirm(`هل أنت متأكد من أنك تريد حذف الطبيب: ${username}؟`);
+    
+    // 2. إذا ضغط "إلغاء"، نوقف الدالة فوراً
+    if (!isConfirmed) return;
+
     const token = localStorage.getItem('token');
     
-    // المسار الصحيح للـ Delete في الـ AuthController
     const response = await fetch(`https://medical-api-4te3.onrender.com/api/auth/delete-doctor/${username}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
