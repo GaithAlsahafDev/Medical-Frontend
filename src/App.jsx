@@ -806,17 +806,6 @@ const handleDeletePatient = async (patientId) => {
                         >
                            📜 عرض السجل ({historyMap[cleanKey]?.length || 1})
                         </button>
-
-                        {/* أضف هذا السطر هنا ليظهر زر الحذف للأدمن فقط */}
-                      {localStorage.getItem('role') === 'Admin' && (
-                        <button 
-                          type="button" 
-                          onClick={() => handleDeletePatient(patient.id)} 
-                          style={{ padding: '6px 12px', backgroundColor: '#c0392b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}
-                        >
-                          🗑️ حذف
-                        </button>
-                      )}
                       </td>
                     </tr>
                   );
