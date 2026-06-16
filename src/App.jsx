@@ -962,6 +962,15 @@ const handleDeletePatient = async (patientId) => {
                       <div style={{ fontWeight: 'bold', color: '#2980b9' }}>
                         الزيارة رقم {selectedPatientHistory.length - index} (سجل ID: {visit.id})
                       </div>
+                      {/* أضف الزر هنا بالضبط */}
+                      {localStorage.getItem('role') === 'Admin' && (
+                        <button 
+                          onClick={() => handleDeletePatient(visit.id)} 
+                          style={{ backgroundColor: '#c0392b', color: 'white', border: 'none', padding: '4px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}
+                        >
+                          🗑️ حذف الزيارة
+                        </button>
+                      )}
                       <div style={{ display: 'flex', gap: '10px' }}>
                         <div style={{ fontSize: '13px', color: '#afc995', backgroundColor: '#0b1f3a', padding: '4px 12px', borderRadius: '20px', fontWeight: '500' }}>
                            المعالج: {vAddedBy}
