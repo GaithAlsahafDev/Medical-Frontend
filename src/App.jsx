@@ -351,6 +351,28 @@ const response = await fetch(`https://medical-api-4te3.onrender.com/api/auth/reg
         alert("فشل حذف الطبيب.");
     }
 };
+const handleDeletePatient = async (patientId) => {
+    const isConfirmed = window.confirm("هل أنت متأكد من حذف هذا السجل الطبي نهائياً؟");
+    if (!isConfirmed) return;
+
+    const token = localStorage.getItem('token');
+    
+    try {
+        const response = await fetch(`https://medical-api-4te3.onrender.com/api/patients/${patientId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.ok) {
+            alert("تم حذف سجل المريض بنجاح!");
+            fetchPatients(); // تحديث الجدول فوراً
+        } else {
+            alert("فشل الحذف، تأكد من الصلاحيات.");
+        }
+    } catch (error) {
+        console.error("خطأ أثناء الحذف:", error);
+    }
+};
   const toggleDropdown = (category) => {
     if (openDropdown === category) {
       setOpenDropdown(null);
@@ -775,6 +797,17 @@ const response = await fetch(`https://medical-api-4te3.onrender.com/api/auth/reg
                         >
                            📜 عرض السجل ({historyMap[cleanKey]?.length || 1})
                         </button>
+
+                        {/* أضف هذا السطر هنا ليظهر زر الحذف للأدمن فقط */}
+                      {localStorage.getItem('role') === 'Admin' && (
+                        <button 
+                          type="button" 
+                          onClick={() => handleDeletePatient(patient.id)} 
+                          style={{ padding: '6px 12px', backgroundColor: '#c0392b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}
+                        >
+                          🗑️ حذف
+                        </button>
+                      )}
                       </td>
                     </tr>
                   );
