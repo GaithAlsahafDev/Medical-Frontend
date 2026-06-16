@@ -352,7 +352,7 @@ const response = await fetch(`https://medical-api-4te3.onrender.com/api/auth/reg
     }
 };
 const handleDeletePatient = async (patientId) => {
-    const isConfirmed = window.confirm("هل أنت متأكد من حذف هذا السجل الطبي نهائياً؟");
+    const isConfirmed = window.confirm("هل أنت متأكد؟");
     if (!isConfirmed) return;
 
     const token = localStorage.getItem('token');
@@ -364,13 +364,22 @@ const handleDeletePatient = async (patientId) => {
         });
 
         if (response.ok) {
-            alert("تم حذف سجل المريض بنجاح!");
-            fetchPatients(); // تحديث الجدول فوراً
-        } else {
-            alert("فشل الحذف، تأكد من الصلاحيات.");
+            alert("تم الحذف!");
+            
+            // 1. تحديث القائمة العامة للمرضى في الخلفية
+            await fetchPatients(); 
+            
+            // 2. تحديث قائمة الزيارات المفتوحة أمامك حالياً
+            // نقوم بفلترة المصفوفة المعروضة في النافذة فوراً
+            setSelectedPatientHistory(prev => prev.filter(visit => visit.id !== patientId));
+            
+            // 3. إذا حذفت آخر زيارة، أغلق النافذة
+            if (selectedPatientHistory.length <= 1) {
+                setSelectedPatientHistory(null);
+            }
         }
     } catch (error) {
-        console.error("خطأ أثناء الحذف:", error);
+        console.error("خطأ:", error);
     }
 };
   const toggleDropdown = (category) => {
