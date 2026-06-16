@@ -922,14 +922,6 @@ const handleDeletePatient = async (patientId) => {
                 إغلاق ✖
               </button>
             </div>
-            
-            {selectedPatientHistory.length > 0 && (
-              <div style={{ backgroundColor: '#0b1f3a', color: '#ccc', padding: '15px', borderRadius: '6px', marginBottom: '20px', borderRight: '4px solid #16a085', display: 'flex', gap: '30px', flexWrap: 'wrap' }}>
-                <span> <strong>تاريخ الميلاد:</strong> {selectedPatientHistory[0].birthDate || selectedPatientHistory[0].BirthDate || "-"}</span>
-                <span> <strong>العنوان الحالي:</strong> {selectedPatientHistory[0].address || selectedPatientHistory[0].Address || "-"}</span>
-                <span> <strong>رقم الهاتف:</strong> {selectedPatientHistory[0].phone || selectedPatientHistory[0].Phone || "-"}</span>
-              </div>
-            )}
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               {selectedPatientHistory.map((visit, index) => {
@@ -969,6 +961,9 @@ const handleDeletePatient = async (patientId) => {
                           🗑️ حذف الزيارة
                         </button>
                       )}
+                      <div style={{ fontSize: '13px', color: '#f1e68d', marginBottom: '10px' }}>
+                     العنوان: {visit.address || "-"} |  الهاتف: {visit.phone || "-"}
+                      </div>
                       <div style={{ display: 'flex', gap: '10px' }}>
                         <div style={{ fontSize: '13px', color: '#afc995', backgroundColor: '#0b1f3a', padding: '4px 12px', borderRadius: '20px', fontWeight: '500' }}>
                            المعالج: {vAddedBy}
